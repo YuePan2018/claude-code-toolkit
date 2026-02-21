@@ -1,6 +1,6 @@
 import sys, json
 
-THRESHOLD = 1500  # 字符数，超过才写文件
+THRESHOLD = 400  # 字符数，超过才写文件
 OUT_FILE = r"C:\Users\Ua Pan\Desktop\claude_output.md"
 
 data = json.loads(sys.stdin.read())
@@ -20,7 +20,9 @@ try:
             if not line:
                 continue
             obj = json.loads(line)
-            role = obj.get("role", "")
+            if obj.get("isMeta"):
+                continue
+            role = obj.get("type", "")
             content = obj.get("message", {}).get("content", [])
             if isinstance(content, list):
                 text = "".join(
