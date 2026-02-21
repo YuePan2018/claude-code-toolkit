@@ -10,8 +10,31 @@ if not transcript_path:
     print("{}")
     sys.exit(0)
 
+
+def format_tool_use(block):
+    name = block.get("name", "")
+    inp = block.get("input", {})
+    if name == "Write":
+        fp = inp.get("file_path", "")
+        content = inp.get("content", "")
+        return f"\n**Write** `{fp}`\n```\n{content}\n```"
+    elif name == "Edit":
+        fp = inp.get("file_path", "")
+        old = inp.get("old_string", "")
+        new = inp.get("new_string", "")
+        diff = "\n".join(
+            [f"- {l}" for l in old.splitlines()] +
+            [f"+ {l}" for l in new.splitlines()]
+        )
+        return f"\n**Edit** `{fp}`\n```diff\n{diff}\n```"
+    elif name == "Bash":
+        cmd = inp.get("command", "")
+        return f"\n**Bash**\n```bash\n{cmd}\n```"
+    return ""
+
+
 last_user = ""
-last_assistant = ""
+assistant_chunks = []  # 当前 user 之后的所有 assistant 内容
 
 try:
     with open(transcript_path, encoding="utf-8") as f:
@@ -24,21 +47,39 @@ try:
                 continue
             role = obj.get("type", "")
             content = obj.get("message", {}).get("content", [])
-            if isinstance(content, list):
-                text = "".join(
-                    b.get("text", "") for b in content
-                    if isinstance(b, dict) and b.get("type") == "text"
-                )
-            elif isinstance(content, str):
-                text = content
-            else:
-                text = ""
-            if role == "user" and text:
-                last_user = text
-            elif role == "assistant" and text:
-                last_assistant = text
+
+            if role == "user":
+                if isinstance(content, list):
+                    text = "".join(
+                        b.get("text", "") for b in content
+                        if isinstance(b, dict) and b.get("type") == "text"
+                    )
+                elif isinstance(content, str):
+                    text = content
+                else:
+                    text = ""
+                if text:
+                    last_user = text
+                    assistant_chunks = []  # 新一轮对话，重置
+
+            elif role == "assistant":
+                if isinstance(content, list):
+                    for block in content:
+                        if not isinstance(block, dict):
+                            continue
+                        btype = block.get("type", "")
+                        if btype == "text":
+                            t = block.get("text", "")
+                            if t:
+                                assistant_chunks.append(t)
+                        elif btype == "tool_use":
+                            formatted = format_tool_use(block)
+                            if formatted:
+                                assistant_chunks.append(formatted)
 except Exception:
     pass
+
+last_assistant = "\n".join(assistant_chunks).strip()
 
 if len(last_assistant) >= THRESHOLD:
     with open(OUT_FILE, "w", encoding="utf-8") as f:
