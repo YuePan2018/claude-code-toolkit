@@ -27,7 +27,7 @@ def format_tool_use(block):
             [f"+ {l}" for l in new.splitlines()]
         )
         return f"\n**Edit** `{fp}`\n```diff\n{diff}\n```"
-    return f" {name}..."
+    return f"{name}..."
 
 
 last_user = ""
@@ -81,7 +81,7 @@ try:
 except Exception:
     pass
 
-last_assistant = "\n".join(assistant_chunks).strip()
+last_assistant = "\n\n".join(assistant_chunks).strip()
 
 if len(last_assistant) >= THRESHOLD:
     with open(OUT_FILE, "w", encoding="utf-8") as f:
