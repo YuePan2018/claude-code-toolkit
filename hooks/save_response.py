@@ -1,6 +1,6 @@
 import sys, json, time
 
-THRESHOLD = 400  # 字符数，超过才写文件
+THRESHOLD = 100  # 字符数，超过才写文件
 OUT_FILE = r"C:\Users\Ua Pan\Desktop\claude_output.md"
 
 data = json.loads(sys.stdin.read())
@@ -27,10 +27,7 @@ def format_tool_use(block):
             [f"+ {l}" for l in new.splitlines()]
         )
         return f"\n**Edit** `{fp}`\n```diff\n{diff}\n```"
-    elif name == "Bash":
-        cmd = inp.get("command", "")
-        return f"\n**Bash**\n```bash\n{cmd}\n```"
-    return ""
+    return f" {name}..."
 
 
 last_user = ""
