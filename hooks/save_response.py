@@ -1,4 +1,4 @@
-import sys, json
+import sys, json, time
 
 THRESHOLD = 400  # 字符数，超过才写文件
 OUT_FILE = r"C:\Users\Ua Pan\Desktop\claude_output.md"
@@ -36,13 +36,18 @@ def format_tool_use(block):
 last_user = ""
 assistant_chunks = []  # 当前 user 之后的所有 assistant 内容
 
+time.sleep(0.5)  # 等待 JSONL 完全写入磁盘
+
 try:
     with open(transcript_path, encoding="utf-8") as f:
         for line in f:
             line = line.strip()
             if not line:
                 continue
-            obj = json.loads(line)
+            try:
+                obj = json.loads(line)
+            except json.JSONDecodeError:
+                continue  # 跳过写入不完整的行
             if obj.get("isMeta"):
                 continue
             role = obj.get("type", "")
