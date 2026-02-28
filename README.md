@@ -9,7 +9,8 @@ ClaudeHelper/
 ├── hooks/
 │   └── save_response.py   # Response saving hook
 ├── skills/                # Custom skills (reserved)
-└── subagents/             # Subagent configs (reserved)
+└── subagents/
+    └── gitignore-guardian.md  # .gitignore review subagent
 ```
 
 ## Features
@@ -17,6 +18,7 @@ ClaudeHelper/
 ### save_response.py
 
 **Pain point**: When Claude's response is too long, it's hard to find and scroll to the beginning of the response in the terminal.
+https://github.com/anthropics/claude-code/issues/6206
 
 **Solution**: This hook exports the last round of user question and Claude response to `claude_output.md` on the desktop after each conversation turn, making it easy to review.
 
@@ -32,4 +34,26 @@ Responses shorter than 100 characters are not written to file.
 
 ```
 python hooks/save_response.py
+```
+
+### gitignore-guardian
+
+**Pain point**: It's easy to accidentally commit IDE configs, log files, secrets, and other files that don't belong in the repo.
+
+**Solution**: A dedicated .gitignore subagent that scans the actual project file structure and fills in missing .gitignore rules. It only adds patterns for files that actually exist — no speculative entries.
+
+Coverage:
+- Claude config (.claude/)
+- IDE configs (.vscode/, .idea/)
+- Sensitive files (.env, credentials)
+- Build output (dist/, build/)
+- Dependencies (node_modules/, .venv/)
+- Logs, caches, temp files
+- Compiled code (*.pyc, __pycache__/)
+- OS files (.DS_Store, Thumbs.db)
+
+**Usage**: Ask Claude Code to check gitignore in the conversation, e.g.:
+
+```
+check gitignore
 ```

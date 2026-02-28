@@ -1,1 +1,8 @@
+# Claude config
 .claude/
+
+# IDE
+.vscode/
+
+# Session logs
+*.jsonl
