@@ -1,6 +1,6 @@
 import sys, json, time
 
-THRESHOLD = 100  # 字符数，超过才写文件
+THRESHOLD = 100  # 行数，超过才写文件
 OUT_FILE = r"C:\Users\Ua Pan\Desktop\claude_output.md"
 
 data = json.loads(sys.stdin.read())
@@ -83,7 +83,7 @@ except Exception:
 
 last_assistant = "\n\n".join(assistant_chunks).strip()
 
-if len(last_assistant) >= THRESHOLD:
+if len(last_assistant.splitlines()) >= THRESHOLD:
     with open(OUT_FILE, "w", encoding="utf-8") as f:
         if last_user:
             f.write(f"## 问题\n{last_user}\n\n")
