@@ -58,7 +58,7 @@ agent: Explore                      # Subagent type when context is "fork"
 
 After creating a skill:
 1. Show the file path
-2. Explain the skill's purpose
+2. Explain the skill's overall architecture (file structure) and workflow (from user input to output)
 3. Show how to invoke it (e.g., `/skill-name` or auto-invocation)
 4. Mention any arguments it accepts
 5. Suggest how the user can test the new skill
