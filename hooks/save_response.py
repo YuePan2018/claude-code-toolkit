@@ -1,7 +1,7 @@
 import sys, json, time, os
 
-# Load config
-config_path = os.path.join(os.path.dirname(__file__), "..", "config.json")
+# Load config from hooks directory
+config_path = os.path.join(os.path.dirname(__file__), "config.json")
 try:
     with open(config_path, encoding="utf-8") as f:
         config = json.load(f)
@@ -11,8 +11,20 @@ except Exception:
 THRESHOLD = config.get("threshold", 100)
 OUT_FILE = os.path.expanduser(config.get("output_file", "~/Desktop/claude_output.md"))
 
-data = json.loads(sys.stdin.read())
-transcript_path = data.get("transcript_path", "")
+try:
+    stdin_content = sys.stdin.read()
+    # 替换反斜杠为正斜杠，避免转义问题
+    stdin_content = stdin_content.replace('\\', '/')
+    data = json.loads(stdin_content)
+    transcript_path = data.get("transcript_path", "")
+    # 转回 Windows 路径格式
+    transcript_path = transcript_path.replace('/', '\\')
+except json.JSONDecodeError:
+    print("{}")
+    sys.exit(0)
+except Exception:
+    print("{}")
+    sys.exit(0)
 
 if not transcript_path:
     print("{}")
