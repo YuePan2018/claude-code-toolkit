@@ -7,15 +7,20 @@ A helper for improving Claude Code productivity, including hooks, skills, subage
 ```
 ClaudeHelper/
 ├── hooks/
-│   └── save_response.py   # Response saving hook
-├── skills/                # Custom skills (reserved)
+│   ├── save_response.py          # Response saving hook
+│   └── completion_notification.py # Completion notification hook
+├── skills/
+│   └── skill-generator/          # Skill generator
+│       ├── SKILL.md
+│       └── hooks-reference.md
 └── subagents/
-    └── gitignore-guardian.md  # .gitignore review subagent
+    └── gitignore-guardian.md     # .gitignore review subagent
 ```
 
 ## Features
 
-### save_response.py
+### Claude Response Export
+**File**: `hooks/save_response.py` (Hook)
 
 **Pain point**: When Claude's response is too long, it's hard to find and scroll to the beginning of the response in the terminal.
 https://github.com/anthropics/claude-code/issues/6206
@@ -30,13 +35,22 @@ Supported content:
 
 Responses shorter than 100 characters are not written to file.
 
+**Configuration**: Edit `config.json` to set your output file path and threshold:
+```json
+{
+  "output_file": "~/Desktop/claude_output.md",
+  "threshold": 100
+}
+```
+
 **Usage**: Add a hook in Claude Code settings, set the trigger to `Stop`, and set the command to:
 
 ```
 python hooks/save_response.py
 ```
 
-### completion_notification.py
+### Claude Completion Notification
+**File**: `hooks/completion_notification.py` (Hook)
 
 **Pain point**: When Claude finishes a task, there's no notification, making it hard to know when to check back.
 
@@ -48,7 +62,8 @@ python hooks/save_response.py
 python hooks/completion_notification.py
 ```
 
-### gitignore-guardian
+### .gitignore Guardian
+**File**: `subagents/gitignore-guardian.md` (Subagent)
 
 **Pain point**: It's easy to accidentally commit IDE configs, log files, secrets, and other files that don't belong in the repo.
 
@@ -69,3 +84,25 @@ Coverage:
 ```
 check gitignore
 ```
+
+### Skill Generator
+**File**: `skills/skill-generator/SKILL.md` (Skill)
+
+**Pain point**: Creating new Claude Code skills requires understanding the skill format, frontmatter fields, best practices, and file structure.
+
+**Solution**: A skill that guides you through creating well-structured skills with proper YAML frontmatter, clear instructions, and progressive disclosure of detailed content.
+
+Features:
+- Interactive workflow to gather requirements
+- Automatic frontmatter configuration (allowed-tools, context, agent, etc.)
+- Progressive disclosure: moves verbose content to reference files
+- Hooks configuration support
+- Best practices enforcement
+
+**Usage**: Invoke when you want to create a new skill:
+
+```
+/skill-generator
+```
+
+Or just ask Claude to create a skill, and it will auto-invoke this skill.

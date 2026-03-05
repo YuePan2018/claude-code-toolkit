@@ -6,3 +6,6 @@
 
 # Session logs
 *.jsonl
+
+# User config
+config.json

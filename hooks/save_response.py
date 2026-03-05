@@ -1,7 +1,15 @@
-import sys, json, time
+import sys, json, time, os
 
-THRESHOLD = 100  # 行数，超过才写文件
-OUT_FILE = r"C:\Users\Ua Pan\Desktop\claude_output.md"
+# Load config
+config_path = os.path.join(os.path.dirname(__file__), "..", "config.json")
+try:
+    with open(config_path, encoding="utf-8") as f:
+        config = json.load(f)
+except Exception:
+    config = {}
+
+THRESHOLD = config.get("threshold", 100)
+OUT_FILE = os.path.expanduser(config.get("output_file", "~/Desktop/claude_output.md"))
 
 data = json.loads(sys.stdin.read())
 transcript_path = data.get("transcript_path", "")

@@ -15,5 +15,4 @@ This is the ClaudeHelper project, designed to improve Claude Code productivity.
 - `save_response.py` receives JSON from stdin containing a `transcript_path` field pointing to a JSONL session log
 - Each line in the JSONL has a `type` field (`user` / `assistant`), with the message body in `message.content`
 - Supports formatted output for `Write`, `Edit`, and other tool calls
-- Output threshold is 100 characters; files are not written below this limit
-- Output path is hardcoded to `C:\Users\Ua Pan\Desktop\claude_output.md`
+- Output threshold and file path are configured in `config.json`
