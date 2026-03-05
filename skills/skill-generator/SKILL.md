@@ -34,8 +34,16 @@ allowed-tools: Read, Grep, Bash     # Comma-separated tools usable without permi
 model: opus                         # Model to use (opus/sonnet/haiku)
 context: fork                       # Set to "fork" for isolated subagent context
 agent: Explore                      # Subagent type when context is "fork"
+hooks:                              # Lifecycle hooks (see hooks-reference.md)
+  PreToolUse:
+    - matcher: "Bash"
+      hooks:
+        - type: command
+          command: "./scripts/check.sh"
 ---
 ```
+
+For detailed hooks configuration, see [hooks-reference.md](./hooks-reference.md).
 
 # Workflow
 
@@ -44,7 +52,7 @@ agent: Explore                      # Subagent type when context is "fork"
 3. Identify required tools and whether they need `allowed-tools`
 4. Write clear, concise instructions
 5. Create the skill file in the appropriate location
-5. Write skill Refenrences, Scripts, and Assets if needed, and link them properly to the skill file.
+5. Write skill References, Scripts, and Assets if needed, and link them properly to the skill file.
 6. Explain how to use it
 
 # Best Practices
