@@ -49,7 +49,7 @@ For detailed hooks configuration, see [hooks-reference.md](./hooks-reference.md)
 
 1. Ask the user what the skill should do. Skip this step if user already provided a clear description.
 2. After response from user, tell user your breif draft of the skill, and clarify any ambiguities. Then confirm the task from user before proceeding
-3. Identify required tools and whether they need `allowed-tools`
+3. Identify allowed-tools, disable-model-invocation, context, and agent based on the task requirements
 4. Write clear, concise instructions
 5. Create the skill file in the appropriate location
 6. Apply progressive disclosure - move lengthy but less-frequently-used content to reference files:
@@ -76,7 +76,7 @@ For detailed hooks configuration, see [hooks-reference.md](./hooks-reference.md)
 
 After creating a skill:
 1. Show the file path and structure (main SKILL.md + any reference/examples files created)
-2. Explain the skill's overall architecture (file structure) and workflow (from user input to output)
+2. Explain the skill's overall architecture (file structure), workflow (from user input to output) and parameters (arguments, allowed-tools, context)
 3. Show how to invoke it (e.g., `/skill-name` or auto-invocation)
 4. Mention any arguments it accepts
 5. If reference files were created, briefly note what detailed content is available there

@@ -36,6 +36,18 @@ Responses shorter than 100 characters are not written to file.
 python hooks/save_response.py
 ```
 
+### completion_notification.py
+
+**Pain point**: When Claude finishes a task, there's no notification, making it hard to know when to check back.
+
+**Solution**: This hook plays a system sound when Claude completes a response, alerting you that the task is done.
+
+**Usage**: Add a hook in Claude Code settings, set the trigger to `Stop`, and set the command to:
+
+```
+python hooks/completion_notification.py
+```
+
 ### gitignore-guardian
 
 **Pain point**: It's easy to accidentally commit IDE configs, log files, secrets, and other files that don't belong in the repo.

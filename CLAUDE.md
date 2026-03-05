@@ -6,6 +6,7 @@ This is the ClaudeHelper project, designed to improve Claude Code productivity.
 
 - `hooks/` — Hook scripts triggered on specific Claude Code events
   - `save_response.py` — Saves the last Q&A of each conversation turn to `claude_output.md` on the desktop
+  - `completion_notification.py` — Plays a system sound when Claude completes a task
 - `skills/` — Custom skills (reserved)
 - `subagents/` — Subagent configs (reserved)
 
