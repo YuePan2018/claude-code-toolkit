@@ -52,8 +52,13 @@ For detailed hooks configuration, see [hooks-reference.md](./hooks-reference.md)
 3. Identify required tools and whether they need `allowed-tools`
 4. Write clear, concise instructions
 5. Create the skill file in the appropriate location
-5. Write skill References, Scripts, and Assets if needed, and link them properly to the skill file.
-6. Explain how to use it
+6. Apply progressive disclosure - move lengthy but less-frequently-used content to reference files:
+   - Keep essential instructions and common workflows in main SKILL.md
+   - Create `reference.md` for detailed explanations, reference docs, edge cases, troubleshooting
+   - Create `examples.md` for extensive code examples if they would make SKILL.md too long
+   - Link reference files from main SKILL.md with brief descriptions
+7. Write skill Scripts if needed, and link them properly
+8. Explain how to use it
 
 # Best Practices
 
@@ -61,13 +66,19 @@ For detailed hooks configuration, see [hooks-reference.md](./hooks-reference.md)
 - **Include examples**: Show expected input/output formats
 - **Set boundaries**: Define what the skill should NOT do
 - **Use sections**: Break complex instructions into clear sections
+- **Progressive disclosure**: Keep moving verbose content to reference files:
+  - Detailed explanations, reference docs → `reference.md`
+  - Extensive examples → `examples.md`
+  - Edge cases and troubleshooting → `reference.md`
+  - Keep core workflow and common use cases in main file
 
 # Output
 
 After creating a skill:
-1. Show the file path
+1. Show the file path and structure (main SKILL.md + any reference/examples files created)
 2. Explain the skill's overall architecture (file structure) and workflow (from user input to output)
 3. Show how to invoke it (e.g., `/skill-name` or auto-invocation)
 4. Mention any arguments it accepts
-5. Suggest how the user can test the new skill
-6. Ask user if they want to change skill name, and provide alternatives if they do.
+5. If reference files were created, briefly note what detailed content is available there
+6. Suggest how the user can test the new skill
+7. Ask user if they want to change skill name, and provide alternatives if they do.
