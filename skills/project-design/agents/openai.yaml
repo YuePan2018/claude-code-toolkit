@@ -1,0 +1,5 @@
+﻿interface:
+  display_name: "项目设计"
+  short_description: "为新编程项目做系统化的现有方案调研、模块设计和实现规划"
+  default_prompt: "Use $project-design to research existing solutions and propose an implementation plan for [project idea]."
+

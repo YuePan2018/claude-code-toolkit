@@ -9,3 +9,6 @@
 
 # User config
 config.json
+
+# Windows shortcuts
+*.lnk

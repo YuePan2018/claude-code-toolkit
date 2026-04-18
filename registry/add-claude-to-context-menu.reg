@@ -1,0 +1,13 @@
+Windows Registry Editor Version 5.00
+
+; Remove old entries first
+[-HKEY_CLASSES_ROOT\Directory\Background\shell\OpenClaudeCLI]
+[-HKEY_CURRENT_USER\Software\Classes\Directory\Background\shell\OpenClaudeCLI]
+
+; Add to Windows 11 new context menu
+[HKEY_CURRENT_USER\Software\Classes\Directory\Background\shell\OpenClaudeCLI]
+@="Open Claude CLI"
+"Icon"="powershell.exe"
+
+[HKEY_CURRENT_USER\Software\Classes\Directory\Background\shell\OpenClaudeCLI\command]
+@="powershell.exe -NoExit -Command \"Set-Location '%V'; claude\""

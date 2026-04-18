@@ -13,8 +13,11 @@ ClaudeHelper/
 │   └── skill-generator/          # Skill generator
 │       ├── SKILL.md
 │       └── hooks-reference.md
-└── subagents/
-    └── gitignore-guardian.md     # .gitignore review subagent
+├── subagents/
+│   └── gitignore-guardian.md     # .gitignore review subagent
+└── registry/
+    ├── add-claude-to-context-menu.reg      # Add Claude CLI to right-click menu
+    └── restore-classic-context-menu.reg    # Restore Windows 10 style context menu
 ```
 
 ## Features
@@ -106,3 +109,29 @@ Features:
 ```
 
 Or just ask Claude to create a skill, and it will auto-invoke this skill.
+
+### Windows Registry Tweaks
+**Files**: `registry/*.reg`, `registry/Start-Codex-Proxy.ps1`, `registry/Start Codex Proxy.lnk`
+
+**Pain point**: Windows 11's new context menu requires extra clicks to access useful tools, and adding Claude CLI to the context menu requires manual registry editing.
+
+**Solution**: Registry scripts and a Codex proxy launcher to improve your Windows experience:
+
+1. **Add Claude CLI to Context Menu** (`add-claude-to-context-menu.reg`)
+   - Adds "Open Claude CLI" option when right-clicking on folder backgrounds
+   - Opens PowerShell in the current directory and launches Claude CLI
+   - Works with Windows 11 new context menu
+
+2. **Restore Classic Context Menu** (`restore-classic-context-menu.reg`)
+   - Disables Windows 11's new context menu
+   - Restores the classic Windows 10 style context menu
+   - Shows all options directly without "Show more options"
+
+3. **Start Codex With Proxy** (`Start-Codex-Proxy.ps1`, `Start Codex Proxy.lnk`)
+   - Starts Codex with `HTTP_PROXY`, `HTTPS_PROXY`, and `ALL_PROXY` set to `http://127.0.0.1:10808`
+   - Keep the PowerShell script in `registry` and copy the shortcut to the desktop or another convenient location
+   - The shortcut points back to the script in `registry`, so moving only the shortcut is enough
+
+**Usage**: Double-click the `.reg` file and confirm to apply the changes. Restart Explorer or log out/in for changes to take effect.
+
+**Note**: These scripts modify the Windows Registry. Always backup your registry before applying changes.
